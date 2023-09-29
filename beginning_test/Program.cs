@@ -13,6 +13,10 @@
         try
         {
             answer = int.Parse(my_str[0].Trim(' '));
+            if (answer > Math.Pow(2, 30))
+            {
+                Console.WriteLine("Требуемое число превосходит 2 в 30 степени");
+            }
         }
         catch (Exception ex)
         {
