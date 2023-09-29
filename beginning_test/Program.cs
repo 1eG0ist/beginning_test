@@ -4,7 +4,21 @@
     {
         Console.Write("Введите строку: ");
         string[] my_str = Console.ReadLine().Split('=');
-        int answer = int.Parse(my_str[0].Trim(' '));
+        if (my_str.Length > 80)
+        {
+            Console.WriteLine("Строка превосходит 80 символов");
+            return;
+        }
+        int answer;
+        try
+        {
+            answer = int.Parse(my_str[0].Trim(' '));
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Требуемое число превосходит 2 в 30 степени");
+            return;
+        }
         string expression = my_str[1].Trim(' ');
         int count_of_operations = expression.Count(x => x == ' ');
         HashSet<string[]> variants = new HashSet<string[]>();
@@ -30,7 +44,6 @@
                 expr_var[positions_of_gaps[j]] = variants[i][j];
             }
             string res_string = new string(expr_var);
-            Console.WriteLine(res_string);
             if (Calculate(res_string) == answer)
             {
                 Console.WriteLine(res_string);
@@ -61,7 +74,6 @@
                 if (bracket_start == 0 && i == expression.Length-1)
                 {
                     expression = CalculateSimpleString(expression);
-                    Console.WriteLine(expression);
                     if (expression.Contains('-')) expression = expression.Substring(1);
                     return int.Parse(expression);
                 }
@@ -79,7 +91,8 @@
         string res_of_two_numbers;
         bool is_first_have_unarn_minus;
         char[] operations = new char[] { '+', '-', '*' };
-        while ( !(str.Count(x => x == '-') == 1 && str[0] == '-' && str.Count(x => x == '+') == 0 && str.Count(x => x == '*') == 0) && (str.Contains('+') || str.Contains('-') || str.Contains('*')) )
+        while ( !(str.Count(x => x == '-') == 1 && str[0] == '-' && str.Count(x => x == '+') == 0 && str.Count(x => x == '*') == 0)
+            && (str.Contains('+') || str.Contains('-') || str.Contains('*')) )
         {
             counter = 0;
             first_number = "";
